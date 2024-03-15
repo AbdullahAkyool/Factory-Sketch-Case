@@ -13,4 +13,5 @@ public class ActionManager : MonoBehaviour
 
     public Action OnIncreaseOrderAndProductValue;
     public Action OnIncreaseOrderCount;
+    public Action OnSpecialAnimationForMainPanel;
 }

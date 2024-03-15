@@ -12,6 +12,8 @@ public class UIController : MonoBehaviour
     public static UIController Instance;
 
     [SerializeField] private GameObject[] uiPanels;
+    [SerializeField] private GameObject mainPanel;
+    Vector3 orgScale;
 
     [Header("Order and Product Code")] [SerializeField]
     private TMP_Text orderCodeText;
@@ -62,9 +64,12 @@ public class UIController : MonoBehaviour
     {
         ActionManager.Instance.OnIncreaseOrderAndProductValue += IncreaseOrderAndProductCode;
         ActionManager.Instance.OnIncreaseOrderCount += IncreaseOrderCount;
+        ActionManager.Instance.OnSpecialAnimationForMainPanel += SpecialMainPanelAnimation;
 
         InvokeRepeating("SetRandomOeeValue", 0, repeatRate);
-        InvokeRepeating("SetRandomStoveValue",0,1);
+        InvokeRepeating("SetRandomStoveValue", 0, 1);
+        
+        orgScale = mainPanel.transform.localScale;
     }
 
     public void ActivateMainPanel()
@@ -140,9 +145,17 @@ public class UIController : MonoBehaviour
         targetValue = Random.Range(baseValue * positiveValue, baseValue * negativeValue);
         return targetValue;
     }
-    
+
     public void OpenTargetURL(string url)
     {
         Application.OpenURL(url);
+    }
+
+    private void SpecialMainPanelAnimation()
+    {
+        mainPanel.transform.DOScale(Vector3.one * .5f, .2f).SetEase(Ease.InOutSine).OnComplete((() =>
+        {
+            mainPanel.transform.DOScale(orgScale, .2f);
+        }));
     }
 }

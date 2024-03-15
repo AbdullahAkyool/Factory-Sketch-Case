@@ -30,5 +30,10 @@ public class GameManager : MonoBehaviour
             ActionManager.Instance.OnIncreaseOrderAndProductValue?.Invoke();
             ActionManager.Instance.OnIncreaseOrderCount?.Invoke();
         }
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            ActionManager.Instance.OnSpecialAnimationForMainPanel?.Invoke();
+        }
     }
 }
